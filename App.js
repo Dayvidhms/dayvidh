@@ -1,27 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { Text, View, Button, Alert } from 'react-native';
+import {css} from './assets/css/Css';
 import Page from './views/Page';
 
+
 export default function App() {
-const props={
-  empresa="webdesign em foco"
-}
+
+  const [product, setProduct]=useState('bola');
+  const [quantity, setQuantity]=useState(0);
+
+
+  useEffect( ()=>{
+    if(quantity>0){
+      Alert.alert('Novo produto foi adicionado');
+    }
+  }, [quantity]);
+
+  const props={
+    empresa:'Teste',
+    produto: product,
+    quantidade:  quantity
+  }
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <View style={css.container}>
+      <Text>{product}</Text>
       <Page {...props}/>
-      <StatusBar style="auto" />
+      <Button title='Adicionar produtos'onPress={()=>setQuantity(quantity+1)}></Button>
+
+
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
